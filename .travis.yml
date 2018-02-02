@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+- '0.11'
+- '0.10'
+sudo: required
+addons:
+  apt:
+    sources:
+    - sourceline: deb http://download.jubat.us/apt/ubuntu/trusty binary/
+before_install:
+- sudo apt-get -qq update
+- sudo apt-get install -y --allow-unauthenticated jubatus
+- source /opt/jubatus/profile
+script:
+- npm test -- --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage
+  && rm -rf ./coverage
+notifications:
+  slack:
+    secure: cMTO8JhlO1w2VJ4RqOApdEvOCXkI5j+CO/9cw/5jzM0GcbrWCmp37CBNP314QQAAyRK6Z02U+xakrfybRnLVcXCGyGDl6FLNd5EZc1rUnN1UCZV3M+CSF9iLgut5alx+OUwpWqMhDQ2MfPTAkO8lfCLEIs3/kdXjrYQh9yUHXdF5v+yUpzG91EkEkQyqoR0psfmg6PB8jc67e3U2UCVzNPBgRL9hbiJm0gLWIqBhHmhBk7oYdF5a4nH7t1pbsqNKt+dfYDXdGQh1vSacvjxC2u0SF6oWIvU8rOIjmMIW/zvyaYrxa4sMfYi0e1psnDEwpx8OSDDI1HtRRL15ZuAAbrYBj50gmAAuVrO2mB8RfstbECJf58qq6Ji77EfsP1IgkM0xxbQSFfdBpG274p5oRmzjbtak2KymB5VYJ9MlpDrRm4uwKfLKgO4oZBtnpJt28s+ArDDdsILOpyjs3/CvxGjHURa3Nb5VnT56813q017ZrtO9GUvfccnY4r/A5IzWb2wg4OjpS/uRCtbCJPcufX4Koq27WnU3hYFy6XvcDGIglJr8CxjCorZKeB2XtJtxyXOe9gVfss8rK3y2NavMKD9jCqRxB0/5doylNXlMGNfq07Bf3OcpW45Tn4r+gYLSu5v05hSn4NfrtyjVP5ZlGC5fwIr47YiVpWPN8Jf0eSg=
+deploy:
+  provider: npm
+  email: n.kimura.cap@gmail.com
+  api_key:
+    secure: cJP6NeDFC+xq1N/HyXpe3nPJc0zJyzShMG2PZ4BE6TXk9rWtWGHrCbdYwidILxhDdWrzwEWGdTkdiZ4VrsT8tCFgeSxVlKD0JG8uEjT4Ae4Rx+S56dWHfQMTqVgWBDJpVBVjoY1/v8RD0Oup75pDLkx81oPfem2qwYgj5L1y+WXlMHKRHEZzTdE+CkYtVaxFNkM4/pDVfMfM2LvTcXEZBUP1fpDKeKiY5G5blj/whXXXowzxbO22OMpBVMEMtgWSWLz8M1OBBMLzvIE5he1elYmOpQyPEkBamaOTs8n4y2w5hXY6ahIjgyVXzt1xMPpRtqPxS4A5Ra2N7yzY2wgQ4I9r3cHLML9Tl71d+00GgVhJLeYG5/mwWxiuuxl6ZVHb1AcX/bQTZheoAs0+VGaKXOaHzBlhS6dhOU5zrhRe19GSWIss/Fy90T02fFOQcUSCHNaQRGlFWpvOE+ZFAmSwPkzgdQU6+EF+TJ4YAZdObXbdEMBHciHe019/b1kvs3PnxudgXCttLStspBW8cXW/uEoGf3kMrxVqyTULV9NM6F0vaATFYi5g50dKXsM73Rd7QsaT5FvE3TfZzay68zoEp5sc/8UYJ/cBrPCB+jqQbxWH54oHwyUCcLzqyi+pX8l0X8TmUl44jNxF3zbQfYlICxgaWx8g0d5W/TJZu/brg2s=
+  on:
+    tags: true
+    repo: naokikimura/jubaclient
