@@ -20,7 +20,7 @@
     "url": "https://github.com/naokikimura/jubaclient/issues"
   },
   "engines": {
-    "node": ">=0.10.0",
+    "node": ">=0.6.0",
     "jubatus": "~1.0.7"
   },
   "homepage": "https://github.com/naokikimura/jubaclient#readme",
