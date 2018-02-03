@@ -14,11 +14,11 @@ Jubatus CLI client (unofficial)
 npm install -g jubaclient
 
 # startup jubaclassifier
-jubaclassifier -p 9190 -f ./config.json -D
+jubaclassifier -f ./config.json -D
 
 # classifier#train()
 echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' | \
-  jubaclient classifier train 9190 localhost 10 | jq '.'
+  jubaclient classifier train | jq '.'
 ```
 
 ## Requires ##
@@ -76,19 +76,16 @@ npm install -g jubaclient
 
 ### Classifier ####
 
-See http://jubat.us/en/tutorial/classifier.html
+See also http://jubat.us/en/tutorial/classifier.html
 
 configure: gender.json
 ```json
 {
   "method": "AROW",
   "converter": {
-    "num_filter_types": {},
-    "num_filter_rules": [],
-    "string_filter_types": {},
-    "string_filter_rules": [],
-    "num_types": {},
-    "num_rules": [],
+    "num_filter_types": {}, "num_filter_rules": [],
+    "string_filter_types": {}, "string_filter_rules": [],
+    "num_types": {}, "num_rules": [],
     "string_types": {
       "unigram": { "method": "ngram", "char_num": "1" }
     },
@@ -96,9 +93,7 @@ configure: gender.json
       { "key": "*", "type": "unigram", "sample_weight": "bin", "global_weight": "bin" }
     ]
   },
-  "parameter": {
-    "regularization_weight" : 1.0
-  }
+  "parameter": { "regularization_weight" : 1.0 }
 }
 ```
 
@@ -133,12 +128,11 @@ short,T shirt,jeans,1.81
 long,shirt,skirt,1.50
 ```
 
-
 classify
 
 ```bash
 cat classify.csv \
- | jq -RcM 'split(",")|[[[[["hair",.[0]],["top",.[1]],["bottom",.[2]]],[["height",(.[3]|tonumber)]]]]]' \
- | jubaclient classifier classify \
- | jq '.[]|max_by(.[1])'
+| jq -RcM 'split(",")|[[[[["hair",.[0]],["top",.[1]],["bottom",.[2]]],[["height",(.[3]|tonumber)]]]]]' \
+| jubaclient classifier classify \
+| jq '.[]|max_by(.[1])'
 ```
