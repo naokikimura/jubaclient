@@ -17,7 +17,7 @@ jubaclassifier -p 9190 -f ./config.json -D
 
 # classifier#train()
 echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' | \
-  jubaclient classifier train 9190 localhost 10 | jq '.'
+  jubaclient classifier train 9190 localhost 10 | jq '.'
 ```
 
 ## Requires ##
