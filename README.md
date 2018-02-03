@@ -121,7 +121,9 @@ female,long,jacket,skirt,1.43
 train
 
 ```bash
-jq -RcM 'split(",")|[[[.[0],[[["hair",.[1]],["top",.[2]],["bottom",.[3]]],[["height",(.[4]|tonumber)]]]]]]' < train.csv | jubaclient classifier train
+cat train.csv \
+| jq -RcM 'split(",")|[[[.[0],[[["hair",.[1]],["top",.[2]],["bottom",.[3]]],[["height",(.[4]|tonumber)]]]]]]' \
+| jubaclient classifier train
 ```
 
 test data: `classify.csv`
@@ -135,5 +137,8 @@ long,shirt,skirt,1.50
 classify
 
 ```bash
-jq -RcM 'split(",")|[[[[["hair",.[0]],["top",.[1]],["bottom",.[2]]],[["height",(.[3]|tonumber)]]]]]' < classify.csv  | jubaclient classifier classify | jq '.[]|max_by(.[1])'
+cat classify.csv \
+ | jq -RcM 'split(",")|[[[[["hair",.[0]],["top",.[1]],["bottom",.[2]]],[["height",(.[3]|tonumber)]]]]]' \
+ | jubaclient classifier classify \
+ | jq '.[]|max_by(.[1])'
 ```
