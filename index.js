@@ -11,8 +11,8 @@ const enabled = /\bjubaclient\b/.test(DEBUG);
 Object.defineProperty(debug, 'enabled', { get() { return enabled; } });
 
 let count = 0;
-const [ service, method, port = 9190, host = 'localhost', timeout = 0 ] = process.argv.slice(2);
-const client = rpc.createClient(port, host, timeout);
+const [ service, method, port = '9190', host = 'localhost', timeout = '0' ] = process.argv.slice(2);
+const client = rpc.createClient(Number(port), host, Number(timeout));
 
 const rl = readline.createInterface({ input: process.stdin })
   .on('line', line => {
@@ -21,7 +21,7 @@ const rl = readline.createInterface({ input: process.stdin })
       resolve(JSON.parse(line));
     }).then(params => {
       debug(params);
-      return request(toCamelCase(service), toCamelCase(method), params, client);
+      return app.request(service, method, params, client);
     }).then(response => {
       debug(response);
       const [ result, msgid ] = response;

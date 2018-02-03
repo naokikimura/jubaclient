@@ -70,7 +70,7 @@ describe('app#toCamelCase', () => {
 
 describe('app#request', () => {
     it('request', done => {
-        app.request('Classifier', 'getStatus', [], client).then(([ result ]) => {
+        app.request('classifier', 'get_status', [], client).then(([ result ]) => {
             debug(result);
             expect(result).to.be.an('object');
             Object.keys(result).forEach(key => {
