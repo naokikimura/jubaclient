@@ -3,6 +3,7 @@
 const readline = require('readline');
 const util = require('util');
 const debug = util.debuglog('jubaclient');
+const minimist = require('minimist');
 const rpc = require('jubatus/lib/msgpack-rpc');
 const app = require('./app');
 
@@ -11,8 +12,9 @@ const enabled = /\bjubaclient\b/.test(DEBUG);
 Object.defineProperty(debug, 'enabled', { get() { return enabled; } });
 
 let count = 0;
-const [ service, method, port = '9190', host = 'localhost', name = '', timeout = '0' ] = process.argv.slice(2);
-const client = rpc.createClient(Number(port), host, Number(timeout));
+const argv = minimist(process.argv.slice(2), { p: 9190, h: 'localhost', n: '', t: 0 });
+const { '_': [ service, method ], p: port, h: host, n: name, t: timeout } = argv;
+const client = rpc.createClient(port, host, timeout);
 
 const rl = readline.createInterface({ input: process.stdin })
   .on('line', line => {

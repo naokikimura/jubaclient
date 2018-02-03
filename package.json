@@ -1,6 +1,6 @@
 {
   "name": "jubaclient",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Jubatus CLI client (unofficial)",
   "main": "index.js",
   "bin": "index.js",
@@ -27,7 +27,8 @@
   },
   "homepage": "https://github.com/naokikimura/jubaclient#readme",
   "dependencies": {
-    "jubatus": "^0.6.4"
+    "jubatus": "^0.6.4",
+    "minimist": "^1.2.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",

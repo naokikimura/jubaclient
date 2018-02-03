@@ -29,7 +29,17 @@ npm install -g jubaclient
 
 ## Usage ##
 
-<code>jubaclient _service_ _method_ [_port_] [_host_] [_name_] [_timeoutSeconds_]</code>
+<code>jubaclient _service_ _method_ [**-p** _port_] [**-h** _host_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
+
+
+- <code>_service_</code>: sevice name (`classifier`, `nearest_neighbor`, etc.)
+- <code>_method_</code>: service method (`get_status`, `train`, `get_k_center`, etc.)
+- <code>**-p** _port_</code> : port number (default `9190`)
+- <code>**-h** _host_</code> : hostname (default `localhost`)
+- <code>**-n** _name_</code> : name of target cluster (default `''`)
+- <code>**-t** _timeoutSeconds_</code> : timeout  (default `0`)
+
+## Examples ##
 
 - save(id)
     ```bash
@@ -43,7 +53,7 @@ npm install -g jubaclient
     ```bash
     echo '[]' | jubaclient classifier get_config | jq '.|fromjson' 
     ```
-- classifier#train()
+- classifier#train(data)
     ```bash
     jubaclient classifier train <<EOF | jq '.'
     [ [ [ "corge", [ [ [ "message", "<p>foo</p>" ] ] ] ] ] ]
@@ -53,7 +63,7 @@ npm install -g jubaclient
     [ [ [ "grault", [ [ [ "message", "<p>quux</p>" ] ] ] ] ] ]
     EOF
     ```
-- classifier#classify()
+- classifier#classify(data)
     ```bash
     jubaclient classifier classify <<EOF | jq '.'
     [ [ [ [ [ "message", "<b>quuz</b>" ] ] ] ] ]
