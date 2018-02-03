@@ -21,6 +21,10 @@ echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' | \
   jubaclient classifier train 9190 localhost 10 | jq '.'
 ```
 
+## Requires ##
+
+- [Node.js](https://nodejs.or]) v6+
+
 ## Installation ##
 
 ```bash
@@ -30,7 +34,6 @@ npm install -g jubaclient
 ## Usage ##
 
 <code>jubaclient _service_ _method_ [**-p** _port_] [**-h** _host_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
-
 
 - <code>_service_</code>: sevice name (`classifier`, `nearest_neighbor`, etc.)
 - <code>_method_</code>: service method (`get_status`, `train`, `get_k_center`, etc.)
@@ -69,7 +72,68 @@ npm install -g jubaclient
     [ [ [ [ [ "message", "<b>quuz</b>" ] ] ] ] ]
     EOF
     ```
+## Tutorial ##
 
-## Requires ##
+### Classifier ####
 
-- [Node.js](https://nodejs.or]) v6+
+See http://jubat.us/en/tutorial/classifier.html
+
+configure: gender.json
+```json
+{
+  "method": "AROW",
+  "converter": {
+    "num_filter_types": {},
+    "num_filter_rules": [],
+    "string_filter_types": {},
+    "string_filter_rules": [],
+    "num_types": {},
+    "num_rules": [],
+    "string_types": {
+      "unigram": { "method": "ngram", "char_num": "1" }
+    },
+    "string_rules": [
+      { "key": "*", "type": "unigram", "sample_weight": "bin", "global_weight": "bin" }
+    ]
+  },
+  "parameter": {
+    "regularization_weight" : 1.0
+  }
+}
+```
+
+start `jubaclassifier` process.
+
+```bash
+jubaclassifier -D --configpath gender.json 
+```
+
+training data: `train.csv`
+```csv
+male,short,sweater,jeans,1.70
+female,long,shirt,skirt,1.56
+male,short,jacket,chino,1.65
+female,short,T shirt,jeans,1.72
+male,long,T shirt,jeans,1.82
+female,long,jacket,skirt,1.43
+```
+
+train
+
+```bash
+jq -RcM 'split(",")|[[[.[0],[[["hair",.[1]],["top",.[2]],["bottom",.[3]]],[["height",(.[4]|tonumber)]]]]]]' < train.csv | jubaclient classifier train
+```
+
+test data: `classify.csv`
+
+```csv
+short,T shirt,jeans,1.81
+long,shirt,skirt,1.50
+```
+
+
+classify
+
+```bash
+jq -RcM 'split(",")|[[[[["hair",.[0]],["top",.[1]],["bottom",.[2]]],[["height",(.[3]|tonumber)]]]]]' < classify.csv  | jubaclient classifier classify | jq '.[]|max_by(.[1])'
+```
