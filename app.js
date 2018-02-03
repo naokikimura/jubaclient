@@ -7,11 +7,11 @@ function toCamelCase(value) {
 }
 exports.toCamelCase = toCamelCase;
 
-function request(service, method, params, rpcClient) {
+function request(service, method, params, rpcClient, name) {
   const serviseName = toCamelCase('_' + service);
   const methodName = toCamelCase(method);
   const { [serviseName.toLowerCase()]: { client: { [serviseName]: Service } } } = jubatus;
-  const client = new Service(rpcClient);
+  const client = new Service({ rpcClient, name });
   debug(client);
   return client[methodName].apply(client, params);
 }
