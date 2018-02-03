@@ -21,6 +21,45 @@ echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' | \
   jubaclient classifier train 9190 localhost 10 | jq '.'
 ```
 
+## Installation ##
+
+```bash
+npm install -g jubaclient
+```
+
+## Usage ##
+
+`jubaclient` _service_ _method_ [_port_] [_host_] [_name_] [_timeoutSeconds_]
+
+- save(id)
+    ```bash
+    echo '[ "jubaclient_save_1" ]' | jubaclient classifier save 
+    ```
+- get_status()
+    ```bash
+    echo '[]' | jubaclient classifier get_status | jq '.' 
+    ```
+- get_config()
+    ```bash
+    echo '[]' | jubaclient classifier get_config | jq '.|fromjson' 
+    ```
+- classifier#train()
+    ```bash
+    jubaclient classifier train <<EOF | jq '.'
+    [ [ [ "corge", [ [ [ "message", "<p>foo</p>" ] ] ] ] ] ]
+    [ [ [ "corge", [ [ [ "message", "<p>bar</p>" ] ] ] ] ] ]
+    [ [ [ "corge", [ [ [ "message", "<p>baz</p>" ] ] ] ] ] ]
+    [ [ [ "grault", [ [ [ "message", "<p>qux</p>" ] ] ] ] ] ]
+    [ [ [ "grault", [ [ [ "message", "<p>quux</p>" ] ] ] ] ] ]
+    EOF
+    ```
+- classifier#classify()
+    ```bash
+    jubaclient classifier classify <<EOF | jq '.'
+    [ [ [ [ [ "message", "<b>quuz</b>" ] ] ] ] ]
+    EOF
+    ```
+
 ## Requires ##
 
 - [Node.js](https://nodejs.or]) v6+
