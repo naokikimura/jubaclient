@@ -29,7 +29,7 @@ npm install -g jubaclient
 
 ## Usage ##
 
-`jubaclient` _service_ _method_ [_port_] [_host_] [_name_] [_timeoutSeconds_]
+<code>jubaclient _service_ _method_ [_port_] [_host_] [_name_] [_timeoutSeconds_]</code>
 
 - save(id)
     ```bash
