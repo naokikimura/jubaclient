@@ -17,8 +17,8 @@ npm install -g jubaclient
 jubaclassifier -f ./config.json -D
 
 # classifier#train()
-echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' | \
-  jubaclient classifier train | jq '.'
+echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' \
+| jubaclient classifier train -p 9199 -h localhost
 ```
 
 ## Requires ##
@@ -82,9 +82,11 @@ The command line options are as follows:
 
 See also http://jubat.us/en/tutorial/classifier.html
 
+[![asciicast](https://asciinema.org/a/160939.png)](https://asciinema.org/a/160939)
+
 1. start `jubaclassifier` process.
     ```bash
-    jubaclassifier -D --configpath gender.json 
+    jubaclassifier -p 9190 -D --configpath gender.json 
     ```
 
 2. train
