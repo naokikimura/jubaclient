@@ -1,0 +1,96 @@
+.TH jubaclient 1 2018-02-04
+
+.SH NAME
+
+jubaclient \- Jubatus CLI client (unofficial)
+
+.SH SYNOPSIS
+
+.B jubaclient
+.I service
+.I method
+[
+.B "-p"
+.I port
+]
+[
+.B "-h"
+.I host
+]
+[
+.B "-n"
+.I name
+]
+[
+.B "-t"
+.I timeout
+]
+
+.SH DESCRIPTION
+
+.PP
+The 
+.B jubaclient
+command requests JSON received from standard input with the specified method to the Jubatus server, and returns the response to the standard output.
+
+.SH OPTIONS
+
+.TP
+.B "-p"
+.I port
+
+port number (default 9190)
+
+.TP
+.B "-h"
+.I host
+
+hostname (default localhost)
+
+.TP
+.B "-n"
+.I name
+
+name of target cluster (default '')
+
+.TP
+.B "-t"
+.I timeout
+
+timeout  (default 0)
+
+.SH BUGS
+
+.TP
+Presumably. Report them or discuss them at:
+
+https://github.com/naokikimura/jubaclient/issues
+
+.SH EXAMPLE
+
+.TP
+#save(id):
+
+echo '[ "jubaclient_save_1" ]' | jubaclient classifier save 
+
+.TP
+#get_config():
+
+echo '[]' | jubaclient classifier get_config | jq '.|fromjson' 
+
+.TP
+classifier#classify(data):
+
+jubaclient classifier classify <<EOF | jq '.'
+
+[ [ [ [ [ "message", "<b>quuz</b>" ] ] ] ] ]
+
+EOF
+
+.SH AUTHORS
+
+Naoki Kimura <n.kimura.cap@gmail.com>
+
+.SH SEE ALSO
+
+JUBATUS_SERVER(8), jq(1)
