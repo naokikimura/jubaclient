@@ -18,7 +18,7 @@ jubaclassifier -f ./config.json -D
 
 # classifier#train()
 echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' \
-| jubaclient classifier train -p 9199 -h localhost
+| jubaclient classifier train
 ```
 
 ## Requires ##
@@ -41,7 +41,7 @@ The command line options are as follows:
 
 - <code>_service_</code>: sevice name (`classifier`, `nearest_neighbor`, etc.)
 - <code>_method_</code>: service method (`get_status`, `train`, `get_k_center`, etc.)
-- <code>**-p** _port_</code> : port number (default `9190`)
+- <code>**-p** _port_</code> : port number (default `9199`)
 - <code>**-h** _host_</code> : hostname (default `localhost`)
 - <code>**-n** _name_</code> : name of target cluster (default `''`)
 - <code>**-t** _timeoutSeconds_</code> : timeout  (default `0`)
@@ -86,7 +86,7 @@ See also http://jubat.us/en/tutorial/classifier.html
 
 1. start `jubaclassifier` process.
     ```bash
-    jubaclassifier -p 9190 -D --configpath gender.json 
+    jubaclassifier -D --configpath gender.json 
     ```
 
 2. train
@@ -123,7 +123,6 @@ configure: `gender.json`
 }
 ```
 
-
 training data: `train.csv`
 ```csv
 male,short,sweater,jeans,1.70
@@ -140,4 +139,3 @@ test data: `classify.csv`
 short,T shirt,jeans,1.81
 long,shirt,skirt,1.50
 ```
-

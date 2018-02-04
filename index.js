@@ -12,7 +12,7 @@ const enabled = /\bjubaclient\b/.test(DEBUG);
 Object.defineProperty(debug, 'enabled', { get() { return enabled; } });
 
 let count = 0;
-const argv = minimist(process.argv.slice(2), { p: 9190, h: 'localhost', n: '', t: 0 });
+const argv = minimist(process.argv.slice(2), { p: 9199, h: 'localhost', n: '', t: 0 });
 const { '_': [ service, method ], p: port, h: host, n: name, t: timeout } = argv;
 
 app.assertServiceMethod(service, method);
