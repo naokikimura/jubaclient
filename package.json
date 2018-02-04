@@ -1,6 +1,6 @@
 {
   "name": "jubaclient",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Jubatus CLI client (unofficial)",
   "main": "index.js",
   "bin": "index.js",
