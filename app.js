@@ -1,3 +1,4 @@
+const assert = require('assert');
 const util = require('util');
 const debug = util.debuglog('jubaclient');
 const jubatus = require('jubatus');
@@ -16,3 +17,17 @@ function request(service, method, params, rpcClient, name) {
   return client[methodName].apply(client, params);
 }
 exports.request = request;
+
+function assertServiceMethod(service, method) {
+  assert.ok(typeof service === 'string', 'service is required.');
+  assert.ok(typeof method === 'string', 'method is required.');
+
+  const serviseName = toCamelCase('_' + service);
+  const namespace = serviseName.toLowerCase();
+  assert.ok(Object.keys(jubatus).some(key => namespace === key), `${ namespace } is unspport service.`);
+
+  const { [namespace]: { client: { [serviseName]: Service } } } = jubatus;
+  const methodName = toCamelCase(method);
+  assert.ok(Object.keys(Service.prototype).some(key => methodName === key), `${ methodName } is unspport method.`);
+}
+exports.assertServiceMethod = assertServiceMethod;

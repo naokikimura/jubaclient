@@ -81,3 +81,20 @@ describe('app#request', () => {
         }).catch(done);
   });
 });
+
+describe('app#assertServiceMethod', () => {
+    it('support', done => {
+        expect(() => app.assertServiceMethod('classifier', 'get_status')).to.not.throw();
+        done();
+    });
+
+    it('unsupport service', done => {
+        expect(() => app.assertServiceMethod('foo', 'get_status')).to.throw(/service/);
+        done();
+    });
+
+    it('unsupport method', done => {
+        expect(() => app.assertServiceMethod('classifier', 'bar')).to.throw(/method/);
+        done();
+    });
+});
