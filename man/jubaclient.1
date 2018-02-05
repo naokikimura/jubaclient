@@ -36,16 +36,29 @@ command requests JSON received from standard input with the specified method to 
 .SH OPTIONS
 
 .TP
+.I service
+
+.B Required.
+service name (classifier, nearest_neighbor, etc.)
+
+.TP
+.I method
+
+
+.B Required.
+service method (get_status, train, get_k_center, etc.)
+
+.TP
 .B "-p"
 .I port
 
-port number (default 9199)
+server port number (default 9199)
 
 .TP
 .B "-h"
 .I host
 
-hostname (default localhost)
+server hostname (default localhost)
 
 .TP
 .B "-n"
@@ -57,7 +70,7 @@ name of target cluster (default '')
 .B "-t"
 .I timeout
 
-timeout  (default 0)
+request timeout  (default 0)
 
 .SH BUGS
 
