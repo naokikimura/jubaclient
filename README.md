@@ -81,6 +81,7 @@ The command line options are as follows:
     ```
 ## Interactive mode ##
 
+Demonstration
 [![asciicast](https://asciinema.org/a/161095.png)](https://asciinema.org/a/161095)
 
 ## Tutorial ##
@@ -89,6 +90,7 @@ The command line options are as follows:
 
 See also http://jubat.us/en/tutorial/classifier.html
 
+Demonstration
 [![asciicast](https://asciinema.org/a/160939.png)](https://asciinema.org/a/160939)
 
 1. start `jubaclassifier` process.
