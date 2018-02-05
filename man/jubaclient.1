@@ -15,7 +15,7 @@ jubaclient \- Jubatus CLI client (unofficial)
 ]
 [
 .B "-h"
-.I host
+.I hostname
 ]
 [
 .B "-n"
@@ -23,7 +23,32 @@ jubaclient \- Jubatus CLI client (unofficial)
 ]
 [
 .B "-t"
-.I timeout
+.I timeoutSeconds
+]
+
+.B jubaclient
+.B -i
+[
+.I service
+]
+[
+.I method
+]
+[
+.B "-p"
+.I port
+]
+[
+.B "-h"
+.I hostname
+]
+[
+.B "-n"
+.I name
+]
+[
+.B "-t"
+.I timeoutSeconds
 ]
 
 .SH DESCRIPTION
@@ -38,37 +63,36 @@ command requests JSON received from standard input with the specified method to 
 .TP
 .I service
 
-.B Required.
 service name (classifier, nearest_neighbor, etc.)
 
 .TP
 .I method
 
 
-.B Required.
 service method (get_status, train, get_k_center, etc.)
 
 .TP
-.B "-p"
-.I port
+.B "-i, --interactive"
+
+interactive mode
+
+.TP
+.B "-p <port>, --port=<port>"
 
 server port number (default 9199)
 
 .TP
-.B "-h"
-.I host
+.B "-h <hostname>, --host=<hostname>"
 
 server hostname (default localhost)
 
 .TP
-.B "-n"
-.I name
+.B "-n <name>, --name=<name>"
 
 name of target cluster (default '')
 
 .TP
-.B "-t"
-.I timeout
+.B "-t <timeoutSeconds>, --timeout=<timeoutSeconds>"
 
 request timeout  (default 0)
 

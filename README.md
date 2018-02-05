@@ -33,7 +33,9 @@ npm install -g jubaclient
 
 ## Usage ##
 
-<code>jubaclient _service_ _method_ [**-p** _port_] [**-h** _host_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
+<code>jubaclient _service_ _method_ [**-p** _port_] [**-h** _hostname_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
+
+<code>jubaclient -i [_service_] [_method_] [**-p** _port_] [**-h** _hostname_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
 
 The `jubaclient` command requests JSON received from standard input with the specified method to the Jubatus server, and returns the response to the standard output.
 
@@ -42,9 +44,10 @@ The command line options are as follows:
 - <code>_service_</code>: sevice name (`classifier`, `nearest_neighbor`, etc.)
 - <code>_method_</code>: service method (`get_status`, `train`, `get_k_center`, etc.)
 - <code>**-p** _port_</code> : port number (default `9199`)
-- <code>**-h** _host_</code> : hostname (default `localhost`)
+- <code>**-h** _hostname_</code> : hostname (default `localhost`)
 - <code>**-n** _name_</code> : name of target cluster (default `''`)
 - <code>**-t** _timeoutSeconds_</code> : timeout  (default `0`)
+- <code>**-i**</code> : interactive mode
 
 ## Examples ##
 
@@ -76,6 +79,10 @@ The command line options are as follows:
     [ [ [ [ [ "message", "<b>quuz</b>" ] ] ] ] ]
     EOF
     ```
+## Interactive mode ##
+
+[![asciicast](https://asciinema.org/a/161095.png)](https://asciinema.org/a/161095)
+
 ## Tutorial ##
 
 ### Classifier ####
