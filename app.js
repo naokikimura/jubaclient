@@ -4,9 +4,14 @@ const debug = util.debuglog('jubaclient');
 const jubatus = require('jubatus');
 
 function toCamelCase(value) {
-  return value.toLowerCase().replace(/_([a-z])/g, (match, group1) => group1.toUpperCase());
+  return value.replace(/_([a-z])/g, (match, group1) => group1.toUpperCase());
 }
 exports.toCamelCase = toCamelCase;
+
+function toSnakeCase(value) {
+  return value.replace(/[A-Z]/g, (match) => '_' + match.toLowerCase());
+}
+exports.toSnakeCase = toSnakeCase;
 
 function request(service, method, params, rpcClient, name) {
   const serviseName = toCamelCase('_' + service);
@@ -19,8 +24,8 @@ function request(service, method, params, rpcClient, name) {
 exports.request = request;
 
 function assertServiceMethod(service, method) {
-  assert.ok(typeof service === 'string', 'service is required.');
-  assert.ok(typeof method === 'string', 'method is required.');
+  assert.ok(service && typeof service === 'string', 'service is required.');
+  assert.ok(method && typeof method === 'string', 'method is required.');
 
   const serviseName = toCamelCase('_' + service);
   const namespace = serviseName.toLowerCase();
