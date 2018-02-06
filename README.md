@@ -41,6 +41,13 @@ npm install -g jubaclient
 
 The `jubaclient` command requests JSON received from standard input with the specified method to the Jubatus server, and returns the response to the standard output.
 
+JSON passed to standard input is an array of method arguments.
+
+- For methods without arguments it is `[]`.
+- If the method argument is a single string type, it should be like `[ "foo" ]`.
+
+**Tips**: JSON formatting is useful for the [jq](https://stedolan.github.io/jq/) command.
+
 The command line options are as follows:
 
 - <code>_service_</code>: sevice name (`classifier`, `nearest_neighbor`, etc.)
