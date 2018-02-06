@@ -12,10 +12,10 @@ before_install:
 - sudo apt-get install -y jq
 - sudo apt-get install -y --allow-unauthenticated jubatus
 - source /opt/jubatus/profile
-- jubaclassifier -f /opt/jubatus/share/jubatus/example/config/classifier/pa.json
+- jubaclassifier -D -f /opt/jubatus/share/jubatus/example/config/classifier/pa.json
 script:
 - npm test -- --report lcovonly -- -R spec && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage
-- echo '[]' | node index.js classifier get_status | jq -c '.'
+- echo '[]' | node index.js classifier get_status
 notifications:
   slack:
     secure: cMTO8JhlO1w2VJ4RqOApdEvOCXkI5j+CO/9cw/5jzM0GcbrWCmp37CBNP314QQAAyRK6Z02U+xakrfybRnLVcXCGyGDl6FLNd5EZc1rUnN1UCZV3M+CSF9iLgut5alx+OUwpWqMhDQ2MfPTAkO8lfCLEIs3/kdXjrYQh9yUHXdF5v+yUpzG91EkEkQyqoR0psfmg6PB8jc67e3U2UCVzNPBgRL9hbiJm0gLWIqBhHmhBk7oYdF5a4nH7t1pbsqNKt+dfYDXdGQh1vSacvjxC2u0SF6oWIvU8rOIjmMIW/zvyaYrxa4sMfYi0e1psnDEwpx8OSDDI1HtRRL15ZuAAbrYBj50gmAAuVrO2mB8RfstbECJf58qq6Ji77EfsP1IgkM0xxbQSFfdBpG274p5oRmzjbtak2KymB5VYJ9MlpDrRm4uwKfLKgO4oZBtnpJt28s+ArDDdsILOpyjs3/CvxGjHURa3Nb5VnT56813q017ZrtO9GUvfccnY4r/A5IzWb2wg4OjpS/uRCtbCJPcufX4Koq27WnU3hYFy6XvcDGIglJr8CxjCorZKeB2XtJtxyXOe9gVfss8rK3y2NavMKD9jCqRxB0/5doylNXlMGNfq07Bf3OcpW45Tn4r+gYLSu5v05hSn4NfrtyjVP5ZlGC5fwIr47YiVpWPN8Jf0eSg=
