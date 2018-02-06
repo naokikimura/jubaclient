@@ -23,8 +23,8 @@ const args = minimist(process.argv.slice(2), argsOption);
 const { p: port, h: host, n: name, t: timeout, i: interactive } = args;
 let { '_': [ service, method ] } = args;
 
-if (typeof port !== 'number') { throw new Error('Illegal option: -p') };
-if (typeof timeout !== 'number') { throw new Error('Illegal option: -t') };
+if (typeof port !== 'number') { throw new Error('Illegal option: -p'); }
+if (typeof timeout !== 'number') { throw new Error('Illegal option: -t'); }
 
 const client = rpc.createClient(port, host, timeout);
 
