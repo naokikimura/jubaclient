@@ -30,6 +30,8 @@ echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' \
 ```bash
 npm install -g jubaclient
 ```
+**Note**: To install on Windows, you need the C compiler and Python 2. See also [with windows-build-tools - npm](https://www.npmjs.com/package/windows-build-tools/tutorial)
+
 
 ## Usage ##
 
