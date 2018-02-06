@@ -81,6 +81,9 @@ The command line options are as follows:
     ```
 ## Interactive mode ##
 
+With the `-i` option, it will be in interactive mode. When choosing service and method, it provides keyword completion system.
+When you send Ctrl-C (SIGINT) you return to choosing the service and method, and sending Ctrl-D (EOT) will end the process.
+
 Demonstration
 [![asciicast](https://asciinema.org/a/161095.png)](https://asciinema.org/a/161095)
 
