@@ -10,11 +10,14 @@ Jubatus CLI client (unofficial)
 ## Quick Start ##
 
 ```bash
+# startup jubaclassifier
+#
+# For example: 
+#  $ docker pull jubatus/jubatus
+#  $ docker run -d -p 9199:9199 jubatus/jubatus jubaclassifier -f /opt/jubatus/share/jubatus/example/config/classifier/pa.json
+
 # installation
 npm install -g jubaclient
-
-# startup jubaclassifier
-jubaclassifier -f ./config.json -D
 
 # classifier#train()
 echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' \
