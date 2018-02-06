@@ -68,6 +68,13 @@ describe('app#toCamelCase', () => {
     });
 });
 
+describe('app#toSnakeCase', () => {
+    it('toSnakeCase', done => {
+        expect(app.toSnakeCase('nearestNeighbor')).to.equal('nearest_neighbor');
+        done();
+    });
+});
+
 describe('app#request', () => {
     it('request', done => {
         app.request('classifier', 'get_status', [], client).then(([ result ]) => {
