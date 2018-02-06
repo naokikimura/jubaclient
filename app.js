@@ -9,19 +9,25 @@ function toCamelCase(value) {
 exports.toCamelCase = toCamelCase;
 
 function toSnakeCase(value) {
-  return value.replace(/[A-Z]/g, (match) => '_' + match.toLowerCase());
+  return value.replace(/[A-Z]/g, match => '_' + match.toLowerCase());
 }
 exports.toSnakeCase = toSnakeCase;
 
 function request(service, method, params, rpcClient, name) {
-  const serviseName = toCamelCase('_' + service);
   const methodName = toCamelCase(method);
-  const { [serviseName.toLowerCase()]: { client: { [serviseName]: Service } } } = jubatus;
+  const Service = resolveService(service);
   const client = new Service({ rpcClient, name });
   debug(client);
   return client[methodName].apply(client, params);
 }
 exports.request = request;
+
+function resolveService(service) {
+  const serviseName = toCamelCase('_' + service);
+  const { [serviseName.toLowerCase()]: { client: { [serviseName]: Service } } } = jubatus;
+  return Service;
+}
+exports.resolveService = resolveService;
 
 function assertServiceMethod(service, method) {
   assert.ok(service && typeof service === 'string', 'service is required.');
