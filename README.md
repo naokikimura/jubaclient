@@ -11,7 +11,6 @@ Jubatus CLI client (unofficial)
 
 ```bash
 # startup jubaclassifier
-#
 # For example: 
 #  $ docker pull jubatus/jubatus
 #  $ docker run -d -p 9199:9199 jubatus/jubatus jubaclassifier -f /opt/jubatus/share/jubatus/example/config/classifier/pa.json
@@ -33,8 +32,8 @@ echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' \
 ```bash
 npm install -g jubaclient
 ```
-**Note**: To install on Windows, you need the C compiler and Python 2. See also [with windows-build-tools - npm](https://www.npmjs.com/package/windows-build-tools/tutorial)
 
+**Note**: To install on Windows, you need the C compiler and Python 2. See also: [with windows-build-tools - npm](https://www.npmjs.com/package/windows-build-tools/tutorial)
 
 ## Usage ##
 
@@ -91,6 +90,7 @@ The command line options are as follows:
     [ [ [ [ [ "message", "<b>quuz</b>" ] ] ] ] ]
     EOF
     ```
+
 ## Interactive mode ##
 
 With the `-i` option, it will be in interactive mode. When choosing service and method, it provides keyword completion system.
@@ -104,9 +104,6 @@ Demonstration
 ### Classifier ####
 
 See also http://jubat.us/en/tutorial/classifier.html
-
-Demonstration
-[![asciicast](https://asciinema.org/a/160939.png)](https://asciinema.org/a/160939)
 
 1. start `jubaclassifier` process.
     ```bash
@@ -163,3 +160,6 @@ test data: `classify.csv`
 short,T shirt,jeans,1.81
 long,shirt,skirt,1.50
 ```
+
+Demonstration
+[![asciicast](https://asciinema.org/a/160939.png)](https://asciinema.org/a/160939)
