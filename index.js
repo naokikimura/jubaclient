@@ -28,59 +28,72 @@ if (typeof timeout !== 'number') throw new Error('Illegal option: -t');
 
 const client = rpc.createClient(port, host, timeout);
 
+let count = 0;
 let completions = Object.keys(jubatus);
 const completer = (line) => {
   const hits = completions.filter((c) => c.startsWith(line));
   return [ hits.length ? hits : completions, line ];
 };
-const rl = readline.createInterface({ input: process.stdin, output: process.stderr, completer: completer });
 
 function question(rl, message) {
   return new Promise(resolve => rl.question(message, resolve));
 }
 
-(service || !interactive ? Promise.resolve(service) : question(rl, `service : `)).then(serviceName => {
-  app.assertServiceMethod(serviceName, 'get_client');
-  service = serviceName;
-  rl.setPrompt(`${ service } >`);
-  const clientClass = jubatus[app.toCamelCase('_' + service).toLowerCase()].client[app.toCamelCase('_' + service)];
-  const notRPCMethodNames = [ 'getClient', 'getName', 'setName' ];
-  const methods = Object.keys(clientClass.prototype)
-    .filter(method => !(notRPCMethodNames.some(notRPCMethod => method === notRPCMethod)))
-    .map(app.toSnakeCase);
-  completions = methods;
-  return (method || !interactive ? Promise.resolve(method) : question(rl, `${ service } method : `));
-}).then(methodName => {
-  method = methodName;
-  app.assertServiceMethod(service, method);
-  rl.setPrompt(`${ service }#${ method } > `);
-  completions = [ '[]' ];
+const rl = readline.createInterface({ input: process.stdin, output: process.stderr, completer: completer });
+rl.on('line', line => {
+  debug(`${ ++count }: ${ line }`);
 
-  let count = 0;
-  if (interactive) rl.prompt();
-  rl.on('line', line => {
-    debug(`${ ++count }: ${ line }`);
+  new Promise((resolve, reject) => {
+    resolve(JSON.parse(line));
+  }).then(params => {
+    debug(params);
+    return app.request(service, method, params, client, name);
+  }).then(response => {
+    debug(response);
+    const [ result, msgid ] = response;
+    console.log(JSON.stringify(result));
 
-    new Promise((resolve, reject) => {
-      resolve(JSON.parse(line));
-    }).then(params => {
-      debug(params);
-      return app.request(service, method, params, client, name);
-    }).then(response => {
-      debug(response);
-      const [ result, msgid ] = response;
-      console.log(JSON.stringify(result));
-
-      if (interactive) rl.prompt();
-    }).catch(error => {
-      console.error(error);
-    });
-  })
-  .on('close', () => {
-    debug(`${ count }`);
-    client.close();
+    if (interactive) rl.prompt();
+  }).catch(error => {
+    console.error(error);
   });
-}).catch(error => {
-  console.error(error.toString());
-  process.exit(1);
+})
+.on('SIGINT', () => {
+  if (!interactive) {
+    rl.close();
+    return;
+  }
+
+  completions = Object.keys(jubatus);
+  question(rl, `service [${ service }]: `).then(serviceName => {
+    service = serviceName || service;
+    app.assertServiceMethod(service || service, 'get_client');
+    const clientClass = jubatus[app.toCamelCase('_' + service).toLowerCase()].client[app.toCamelCase('_' + service)];
+    const notRPCMethodNames = [ 'getClient', 'getName', 'setName' ];
+    const methods = Object.keys(clientClass.prototype)
+      .filter(method => !(notRPCMethodNames.some(notRPCMethod => method === notRPCMethod)))
+      .map(app.toSnakeCase);
+    completions = methods;
+    return question(rl, `${ service } method [${ method }]: `);
+  }).then(methodName => {
+    method = methodName || method;
+    app.assertServiceMethod(service, method);
+    rl.setPrompt(`${ service }#${ method } > `);
+    completions = [ '[]' ];
+  
+    rl.prompt();
+  }).catch(error => {
+    console.error(error.toString());
+    process.exit(1);
+  });
+})
+.on('close', () => {
+  debug(`${ count }`);
+  client.close();
 });
+
+if (interactive) {
+  rl.write(null, { ctrl: true, name: 'c' });
+} else {
+  app.assertServiceMethod(service, method);
+}
