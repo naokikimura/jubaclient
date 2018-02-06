@@ -14,7 +14,7 @@ Object.defineProperty(debug, 'enabled', { get() { return enabled; } });
 
 const argsOption = {
   boolean: [ 'i' ],
-  string: [ 'p', 'h', 'n', 't' ],
+  string: [ 'h', 'n' ],
   alias : { 'p': 'port', 'h': 'host', 'n': 'name', 't': 'timeout', 'i': 'interactive' },
   default: { p: 9199, h: 'localhost', n: '', t: 0, i: false },
   unknown: false
