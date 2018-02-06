@@ -58,6 +58,14 @@ The
 .B jubaclient
 command requests JSON received from standard input with the specified method to the Jubatus server, and returns the response to the standard output.
 
+.TP
+.SH Interactive mode
+With
+the
+.B "-i"
+option,
+it will be in interactive mode. When choosing service and method, it provides keyword completion system. When you send Ctrl-C (SIGINT) you return to choosing the service and method, and sending Ctrl-D (EOT) will end the process.
+
 .SH OPTIONS
 
 .TP
