@@ -39,9 +39,16 @@ function question(rl, message) {
   return new Promise(resolve => rl.question(message, resolve));
 }
 
-const rl = readline.createInterface({ input: process.stdin, output: process.stderr, completer });
+const interfaceOption = { input: process.stdin, completer };
+if (interactive) { interfaceOption.output = process.stderr; }
+const rl = readline.createInterface(interfaceOption);
 rl.on('line', line => {
   debug(`${ ++count }: ${ line }`);
+
+  if (interactive && line === '') {
+    rl.prompt();
+    return;
+  }
 
   new Promise((resolve, reject) => {
     resolve(JSON.parse(line));
@@ -56,6 +63,8 @@ rl.on('line', line => {
     if (interactive) { rl.prompt(); }
   }).catch(error => {
     console.error(error);
+
+    if (interactive) { rl.prompt(); }
   });
 })
 .on('SIGINT', () => {
