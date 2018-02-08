@@ -2,14 +2,13 @@
 
 const readline = require('readline');
 const util = require('util');
-const debug = util.debuglog('jubaclient');
 const minimist = require('minimist');
 const jubatus = require('jubatus');
 const rpc = require('jubatus/lib/msgpack-rpc');
 const app = require('./app');
 
-const { env: { DEBUG } } = (global.process || { env: {} });
-const enabled = /\bjubaclient\b/.test(DEBUG);
+const debug = util.debuglog('jubaclient');
+const enabled = debug.toString() !== (function () {}).toString();
 Object.defineProperty(debug, 'enabled', { get() { return enabled; } });
 
 const argsOption = {
