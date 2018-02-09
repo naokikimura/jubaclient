@@ -33,13 +33,13 @@ echo '[ [ [ "baz", [ [ [ "foo", "bar" ] ] ] ] ] ]' \
 npm install -g jubaclient
 ```
 
-**Note**: To install on Windows, you need the C compiler and Python 2. See also: [with windows-build-tools - npm](https://www.npmjs.com/package/windows-build-tools/tutorial)
-
 ## Usage ##
 
-<code>jubaclient _service_ _method_ [**-p** _port_] [**-h** _hostname_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
+<code>**jubaclient** _service_ _method_ [**-p** _port_] [**-h** _hostname_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
 
-<code>jubaclient -i [_service_] [_method_] [**-p** _port_] [**-h** _hostname_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
+<code>**jubaclient** **-i** [_service_] [_method_] [**-p** _port_] [**-h** _hostname_] [**-n** _name_] [**-t** _timeoutSeconds_]</code>
+
+<code>**jubaclient** **-v**</code>
 
 The `jubaclient` command requests JSON received from standard input with the specified method to the Jubatus server, and returns the response to the standard output.
 
@@ -59,6 +59,7 @@ The command line options are as follows:
 - <code>**-n** _name_</code> : name of target cluster (default `''`)
 - <code>**-t** _timeoutSeconds_</code> : timeout  (default `0`)
 - <code>**-i**</code> : interactive mode
+- <code>**-v**</code> : Print jubaclient's version.
 
 ## Examples ##
 
