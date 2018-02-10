@@ -7,40 +7,40 @@ const rpc = require('jubatus/lib/msgpack-rpc');
 const app = require('../app');
 
 function createServerProcess(command, config, timeoutSeconds = 10, regex = /RPC server startup/) {
-  const option = { port: Number(process.env.npm_package_config_test_port || 9199) };
-  return portfinder.getPortPromise(option).then(port => {
-      debug(`port: ${ port }`);
-      return new Promise((resolve, reject) => {
-          const args = [ '-p', port, '-f', config ], options = { cwd: __dirname };
-          resolve([port, spawn(command, args, options) ]);
-      });
-  }).then(([ port, serverProcess ]) => {
-    const executor = (resolve, reject) => {
-        const timeout = timers.setTimeout(() => {
-            serverProcess.kill();
-            reject(new Error('timeout!'));
-        }, timeoutSeconds * 1000);
-        serverProcess.on('exit', (code, signal) => {
-            debug({ code, signal });
-            if (code === null) {
-                reject(new Error(signal));
-                timers.clearTimeout(timeout);
-            }
+    const option = { port: Number(process.env.npm_package_config_test_port || 9199) };
+    return portfinder.getPortPromise(option).then(port => {
+        debug(`port: ${ port }`);
+        return new Promise((resolve, reject) => {
+            const args = [ '-p', port, '-f', config ], options = { cwd: __dirname };
+            resolve([port, spawn(command, args, options) ]);
         });
-        serverProcess.stdout.on('data', data => {
-            if (regex.test(data.toString())) {
-                resolve([ port, serverProcess ]);
-                timers.clearTimeout(timeout);
-            }
-        });
-        if (debug.enabled) {
-            serverProcess.stdout.on('data', data => {
-                process.stderr.write(data);
+    }).then(([ port, serverProcess ]) => {
+        const executor = (resolve, reject) => {
+            const timeout = timers.setTimeout(() => {
+                serverProcess.kill();
+                reject(new Error('timeout!'));
+            }, timeoutSeconds * 1000);
+            serverProcess.on('exit', (code, signal) => {
+                debug({ code, signal });
+                if (code === null) {
+                    reject(new Error(signal));
+                    timers.clearTimeout(timeout);
+                }
             });
-        }
-    };
-    return new Promise(executor);
-  });
+            serverProcess.stdout.on('data', data => {
+                if (regex.test(data.toString())) {
+                    resolve([ port, serverProcess ]);
+                    timers.clearTimeout(timeout);
+                }
+            });
+            if (debug.enabled) {
+                serverProcess.stdout.on('data', data => {
+                    process.stderr.write(data);
+                });
+            }
+        };
+        return new Promise(executor);
+    });
 }
 
 let server;
@@ -86,7 +86,7 @@ describe('app#request', () => {
             });
             done();
         }).catch(done);
-  });
+    });
 });
 
 describe('app#assertServiceMethod', () => {
