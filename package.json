@@ -28,8 +28,9 @@
   },
   "homepage": "https://github.com/naokikimura/jubaclient#readme",
   "dependencies": {
-    "jubatus": "^0.7.1",
-    "minimist": "^1.2.0"
+    "jubatus": "~0.7.4",
+    "minimist": "^1.2.0",
+    "msgpack-rpc-lite": "~0.0.3"
   },
   "devDependencies": {
     "chai": "^4.1.2",

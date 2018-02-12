@@ -3,17 +3,15 @@ const debug = require('debug')('jubaclient:test');
 const timers = require('timers');
 const spawn = require('child_process').spawn;
 const portfinder = require('portfinder');
-const rpc = require('jubatus/lib/msgpack-rpc');
+const rpc = require('msgpack-rpc-lite');
 const app = require('../app');
 
 function createServerProcess(command, config, timeoutSeconds = 10, regex = /RPC server startup/) {
     const option = { port: Number(process.env.npm_package_config_test_port || 9199) };
     return portfinder.getPortPromise(option).then(port => {
         debug(`port: ${ port }`);
-        return new Promise((resolve, reject) => {
-            const args = [ '-p', port, '-f', config ], options = { cwd: __dirname };
-            resolve([port, spawn(command, args, options) ]);
-        });
+        const args = [ '-p', port, '-f', config ], options = { cwd: __dirname };
+        return [ port, spawn(command, args, options) ];
     }).then(([ port, serverProcess ]) => {
         const executor = (resolve, reject) => {
             const timeout = timers.setTimeout(() => {

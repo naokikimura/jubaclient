@@ -4,7 +4,7 @@ const readline = require('readline');
 const util = require('util');
 const minimist = require('minimist');
 const jubatus = require('jubatus');
-const rpc = require('jubatus/lib/msgpack-rpc');
+const rpc = require('msgpack-rpc-lite');
 const app = require('./app');
 
 const debug = util.debuglog('jubaclient');
@@ -31,7 +31,7 @@ if (version) {
 if (typeof port !== 'number') { throw new Error('Illegal option: -p'); }
 if (typeof timeout !== 'number') { throw new Error('Illegal option: -t'); }
 
-const client = rpc.createClient(port, host, timeout);
+const client = rpc.createClient(port, host, timeout, { encode: { useraw: true } });
 
 let count = 0;
 let completions = Object.keys(jubatus);
