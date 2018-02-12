@@ -77,7 +77,11 @@ rl.on('line', line => {
         return;
     }
 
-    completions = Object.keys(jubatus);
+    completions = Object.keys(jubatus)
+        .map(namespace => Object.keys(jubatus[namespace].client))
+        .reduce((accumulator, current) => accumulator.concat(current))
+        .map(className => className.replace(/^([A-Z])/, (match) => match.toLowerCase()))
+        .map(app.toSnakeCase);
     question(rl, `service [${ service }]: `).then(serviceName => {
         service = serviceName || service;
         app.assertServiceMethod(service || service, 'get_client');
