@@ -63,7 +63,8 @@ rl.on('line', line => {
     }).then(response => {
         debug(response);
         const [ result, msgid ] = response;
-        console.log(JSON.stringify(result));
+        const tuple = jubatus.common.toTuple(result);
+        console.log(JSON.stringify(tuple));
 
         if (interactive) { rl.prompt(); }
     }).catch(error => {
@@ -78,19 +79,18 @@ rl.on('line', line => {
     }
 
     completions = Object.keys(jubatus)
-        .map(namespace => Object.keys(jubatus[namespace].client))
+        .map(namespace => jubatus[namespace].client || {})
+        .map(Object.keys)
         .reduce((accumulator, current) => accumulator.concat(current))
         .map(className => className.replace(/^([A-Z])/, (match) => match.toLowerCase()))
         .map(app.toSnakeCase);
     question(rl, `service [${ service }]: `).then(serviceName => {
         service = serviceName || service;
-        app.assertServiceMethod(service || service, 'get_client');
+        app.assertServiceMethod(service || service, 'get_status');
         const clientClass = app.resolveService(service);
-        const notRPCMethodNames = [ 'getClient', 'getName', 'setName' ];
-        const methods = Object.keys(clientClass.prototype)
-            .filter(method => !(notRPCMethodNames.some(notRPCMethod => method === notRPCMethod)))
+        completions = Object.keys(clientClass.prototype)
+            .concat(Object.keys(clientClass.super_.prototype))
             .map(app.toSnakeCase);
-        completions = methods;
         return question(rl, `${ service } method [${ method }]: `);
     }).then(methodName => {
         method = methodName || method;

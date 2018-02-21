@@ -39,6 +39,7 @@ function assertServiceMethod(service, method) {
 
     const { [namespace]: { client: { [serviseName]: Service } } } = jubatus;
     const methodName = toCamelCase(method);
-    assert.ok(Object.keys(Service.prototype).some(key => methodName === key), `${ methodName } is unspport method.`);
+    const methodNames = Object.keys(Service.prototype).concat(Object.keys(Service.super_.prototype));
+    assert.ok(methodNames.some(key => methodName === key), `${ methodName } is unspport method.`);
 }
 exports.assertServiceMethod = assertServiceMethod;
