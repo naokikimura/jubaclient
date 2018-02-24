@@ -55,14 +55,13 @@ rl.on('line', line => {
         return;
     }
 
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
         resolve(JSON.parse(line));
     }).then(params => {
         debug(params);
         return app.request(service, method, params, client, name);
-    }).then(response => {
-        debug(response);
-        const [ result, msgid ] = response;
+    }).then(result => {
+        debug(result);
         const tuple = jubatus.common.toTuple(result);
         console.log(JSON.stringify(tuple));
 
