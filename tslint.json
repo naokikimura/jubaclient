@@ -5,8 +5,18 @@
     ],
     "jsRules": {},
     "rules": {
-        "arrow-parens": false,
+        "arrow-parens": [
+            true,
+            "ban-single-arg-parens"
+        ],
         "interface-name": false,
+        "no-console": [
+            true,
+            "assert",
+            "debug",
+            "info",
+            "warn"
+        ],
         "max-line-length": [
             true,
             120
@@ -23,6 +33,12 @@
         "space-before-function-paren": [
             true,
             "anonymous"
+        ],
+        "trailing-comma": [
+            true,
+            {
+                "esSpecCompliant": true
+            }
         ]
     },
     "rulesDirectory": []

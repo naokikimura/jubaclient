@@ -1,18 +1,21 @@
-const expect = require('chai').expect;
-const debug = require('debug')('jubaclient:test');
-const timers = require('timers');
-const spawn = require('child_process').spawn;
-const portfinder = require('portfinder');
-const rpc = require('msgpack-rpc-lite');
-const app = require('../app');
+import { expect } from 'chai';
+import { ChildProcess, spawn } from 'child_process';
+import debuglog from 'debug';
+import * as rpc from 'msgpack-rpc-lite';
+import portfinder from 'portfinder';
+import timers from 'timers';
+import * as app from '../src/app';
+
+const debug = debuglog('jubaclient:test');
 
 function createServerProcess(command, config, timeoutSeconds = 10, regex = /RPC server startup/) {
     const option = { port: Number(process.env.npm_package_config_test_port || 9199) };
     return portfinder.getPortPromise(option).then(port => {
-        debug(`port: ${ port }`);
-        const args = [ '-p', port, '-f', config ], options = { cwd: __dirname };
-        return [ port, spawn(command, args, options) ];
-    }).then(([ port, serverProcess ]) => {
+        debug(`port: ${port}`);
+        const args = ['-p', port, '-f', config];
+        const options = { cwd: __dirname };
+        return ([port, spawn(command, args, options)] as [number, ChildProcess]);
+    }).then(([port, serverProcess]) => {
         const executor = (resolve, reject) => {
             const timeout = timers.setTimeout(() => {
                 serverProcess.kill();
@@ -27,7 +30,7 @@ function createServerProcess(command, config, timeoutSeconds = 10, regex = /RPC 
             });
             serverProcess.stdout.on('data', data => {
                 if (regex.test(data.toString())) {
-                    resolve([ port, serverProcess ]);
+                    resolve([port, serverProcess]);
                     timers.clearTimeout(timeout);
                 }
             });
@@ -41,12 +44,13 @@ function createServerProcess(command, config, timeoutSeconds = 10, regex = /RPC 
     });
 }
 
-let server;
-let client;
+let server: ChildProcess;
+let client: rpc.Client;
 
 before(done => {
-    const command = 'jubaclassifier', config = 'classifier_config.json';
-    createServerProcess(command, config).then(([ port, serverProcess ]) => {
+    const command = 'jubaclassifier';
+    const config = 'classifier_config.json';
+    createServerProcess(command, config).then(([port, serverProcess]) => {
         server = serverProcess;
         client = rpc.createClient(port);
         done();
@@ -75,7 +79,7 @@ describe('app#toSnakeCase', () => {
 
 describe('app#request', () => {
     it('request', done => {
-        app.request('classifier', 'get_status', [], client).then(([ result ]) => {
+        app.request('classifier', 'get_status', [], client).then(result => {
             debug(result);
             expect(result).to.be.an('object');
             Object.keys(result).forEach(key => {

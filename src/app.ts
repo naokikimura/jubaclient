@@ -1,35 +1,33 @@
-const assert = require('assert');
-const util = require('util');
-const debug = util.debuglog('jubaclient');
-const jubatus = require('jubatus');
+import assert from 'assert';
+import jubatus from 'jubatus';
+import * as rpc from 'msgpack-rpc-lite';
+import util from 'util';
 
-function toCamelCase(value) {
+const debug = util.debuglog('jubaclient');
+
+export function toCamelCase(value: string) {
     return value.replace(/_([a-z])/g, (match, group1) => group1.toUpperCase());
 }
-exports.toCamelCase = toCamelCase;
 
-function toSnakeCase(value) {
+export function toSnakeCase(value: string) {
     return value.replace(/[A-Z]/g, match => '_' + match.toLowerCase());
 }
-exports.toSnakeCase = toSnakeCase;
 
-function resolveService(service) {
+export function resolveService(service: string) {
     const serviseName = toCamelCase('_' + service);
     const { [serviseName.toLowerCase()]: { client: { [serviseName]: Service } } } = jubatus;
     return Service;
 }
-exports.resolveService = resolveService;
 
-function request(service, method, params, rpcClient, name) {
+export function request(service: string, method: string, params: any[], rpcClient: rpc.Client, name?: string) {
     const methodName = toCamelCase(method);
     const Service = resolveService(service);
     const client = new Service({ rpcClient, name });
     debug(client);
     return client[methodName].apply(client, params);
 }
-exports.request = request;
 
-function assertServiceMethod(service, method) {
+export function assertServiceMethod(service: string, method: string) {
     assert.ok(service && typeof service === 'string', 'service is required.');
     assert.ok(method && typeof method === 'string', 'method is required.');
 
@@ -42,4 +40,3 @@ function assertServiceMethod(service, method) {
     const methodNames = Object.keys(Service.prototype).concat(Object.keys(Service.super_.prototype));
     assert.ok(methodNames.some(key => methodName === key), `${ methodName } is unspport method.`);
 }
-exports.assertServiceMethod = assertServiceMethod;

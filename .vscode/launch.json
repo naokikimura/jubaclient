@@ -15,7 +15,11 @@
         "--timeout",
         "999999",
         "--colors",
-        "${workspaceFolder}/test"
+        "-r",
+        "ts-node/register",
+        "test/**/*.ts",
+        "-r",
+        "source-map-support/register"
       ],
       "internalConsoleOptions": "openOnSessionStart"
     },
@@ -23,7 +27,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/index.js"
+      "program": "${workspaceFolder}/dist/index.js"
     }
   ]
 }
