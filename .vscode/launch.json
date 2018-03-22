@@ -27,7 +27,14 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceFolder}/dist/index.js"
+      "runtimeArgs": [
+        "-r",
+        "ts-node/register"
+      ],
+      "args": [
+        "classifier"
+      ],
+      "program": "${workspaceFolder}/src/index.ts"
     }
   ]
 }
