@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/naokikimura/jubaclient.svg?branch=master)](https://travis-ci.org/naokikimura/jubaclient)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/2f6c4944c7df41a887627318c06d92c3)](https://www.codacy.com/app/n.kimura.cap/jubaclient?utm_source=github.com&utm_medium=referral&utm_content=naokikimura/jubaclient&utm_campaign=badger)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/7f75cce83b7e4db49e8e8ce8b9398c05)](https://www.codacy.com/app/n.kimura.cap/jubaclient?utm_source=github.com&utm_medium=referral&utm_content=naokikimura/jubaclient&utm_campaign=Badge_Coverage)
-[![Dependency Status](https://beta.gemnasium.com/badges/github.com/naokikimura/jubaclient.svg)](https://beta.gemnasium.com/projects/github.com/naokikimura/jubaclient)
+[![Known Vulnerabilities](https://snyk.io/test/github/naokikimura/jubaclient/badge.svg?targetFile=package.json)](https://snyk.io/test/github/naokikimura/jubaclient?targetFile=package.json)
 
 Jubatus CLI client (unofficial)
 
