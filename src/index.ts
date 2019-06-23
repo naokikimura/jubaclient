@@ -22,7 +22,7 @@ let { '_': [service, method] } = args;
 
 if (version) {
     // tslint:disable-next-line:no-var-requires
-    const npmPackage = require('./package.json');
+    const npmPackage = require('../package.json');
     console.log(npmPackage.version);
     process.exit(0);
 }
