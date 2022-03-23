@@ -30,7 +30,7 @@
   "homepage": "https://github.com/naokikimura/jubaclient#readme",
   "dependencies": {
     "jubatus": "^0.9.10",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "msgpack-rpc-lite": "^1.0.2"
   },
   "devDependencies": {
